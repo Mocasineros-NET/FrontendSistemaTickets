@@ -15,7 +15,7 @@ function Nav() {
     if (!auth) return null;
     
     return (
-      <div className="navbar bg-slate-900">
+      <div className="navbar bg-slate-800">
           <div className="flex-1">
               <Link exact to={{pathname: '/'}} className="hover:no-underline hover:text-white hover:bg-slate-800">
                   <a className="btn btn-ghost normal-case text-xl text-white">
@@ -39,6 +39,11 @@ function Nav() {
                   <li>
                       <Link to={{pathname: '/users'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
                           Users
+                      </Link>
+                  </li>
+                  <li>
+                      <Link onClick={userActions.logout} className="hover:no-underline hover:text-white hover:bg-slate-600">
+                          Logout
                       </Link>
                   </li>
               </ul>

@@ -7,6 +7,8 @@ import { history } from '_helpers';
 import { Home } from 'home';
 import { Users } from 'users';
 import { Account } from 'account';
+import { LoginNew } from './account/Login';
+import { RegisterNew } from './account/Register';
 
 export { App };
 
@@ -14,7 +16,7 @@ function App() {
     const auth = useRecoilValue(authAtom);
 
     return (
-        <div className={'app-container' + (auth ? ' bg-light' : '')}>
+        <div className={'app-container' + (auth ? ' bg-light' : ' bg-gradient-to-r from-slate-600 to-slate-800')}>
             <Router history={history}>
                 <Nav />
                 <Alert />

@@ -26,7 +26,7 @@ function Alert() {
     return (
         <div className="container">
             <div className="m-3">
-                <div className={`alert alert-dismissable ${alert.type}`}>
+                <div className={`alert alert-dismissable border-none w-[26%] m-auto ${alert.type}`}>
                     <a className="close" onClick={alertActions.clear}>&times;</a>
                     {alert.message}
                 </div>
