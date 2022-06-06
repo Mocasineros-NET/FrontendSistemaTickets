@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/FrontendSistemaTickets/static/css/main.79d5473a.css",
+    "main.js": "/FrontendSistemaTickets/static/js/main.ef46d235.js",
+    "static/media/logo.png": "/FrontendSistemaTickets/static/media/logo.ea5bb71cc23a9479c71a.png",
+    "index.html": "/FrontendSistemaTickets/index.html",
+    "main.79d5473a.css.map": "/FrontendSistemaTickets/static/css/main.79d5473a.css.map",
+    "main.ef46d235.js.map": "/FrontendSistemaTickets/static/js/main.ef46d235.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.79d5473a.css",
+    "static/js/main.ef46d235.js"
+  ]
+}
