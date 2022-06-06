@@ -116,7 +116,6 @@ function AddEdit({ history, match }) {
                             {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                             Save
                         </button>
-                        <button onClick={() => reset(user)} type="button" disabled={isSubmitting} className="btn btn-secondary">Reset</button>
                         <Link to="/users" className="btn btn-link">Cancel</Link>
                     </div>
                 </form>

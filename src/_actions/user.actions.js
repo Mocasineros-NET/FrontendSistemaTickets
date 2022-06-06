@@ -110,7 +110,7 @@ function useUserActions () {
     }
 
     function getById(id) {
-        return fetchWrapper.get(`${baseUrl}/${id}`).then(setUser);
+        return fetchWrapper.get(`${baseUrl}/users/${id}`).then(setUser);
     }
 
     function getTicketById(id) {
@@ -122,7 +122,7 @@ function useUserActions () {
     }
 
     function update(id, params) {
-        return fetchWrapper.put(`${baseUrl}/${id}`, params)
+        return fetchWrapper.put(`${baseUrl}/users/${id}`, params)
           .then(x => {
               // update stored user if the logged in user updated their own record
               if (id === auth?.id) {
@@ -161,7 +161,7 @@ function useUserActions () {
             return x;
         }));
 
-        return fetchWrapper.delete(`${baseUrl}/${id}`)
+        return fetchWrapper.delete(`${baseUrl}/users/${id}`)
             .then(() => {
                 // remove user from list after deleting
                 setUsers(users => users.filter(x => x.id !== id));
