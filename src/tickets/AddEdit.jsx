@@ -5,31 +5,24 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useRecoilValue } from 'recoil';
 
-import { userAtom } from '_state';
+import { ticketAtom } from '_state';
 import { useUserActions, useAlertActions } from '_actions';
 
 export { AddEdit };
 
 function AddEdit({ history, match }) {
   const { id } = match.params;
-  const { role } = match.params;
   const mode = { add: !id, edit: !!id };
   const userActions = useUserActions();
   const alertActions = useAlertActions();
-  const user = useRecoilValue(userAtom);
+  const ticket = useRecoilValue(ticketAtom);
 
   // form validation rules
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string()
-      .required('First Name is required'),
-    lastName: Yup.string()
-      .required('Last Name is required'),
-    username: Yup.string()
-      .required('Username is required'),
-    password: Yup.string()
-      .transform(x => x === '' ? undefined : x)
-      .concat(mode.add ? Yup.string().required('Password is required') : null)
-      .min(6, 'Password must be at least 6 characters')
+    title: Yup.string()
+      .required('Title is required'),
+    description: Yup.string()
+      .required('Description is required'),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -40,76 +33,61 @@ function AddEdit({ history, match }) {
   useEffect(() => {
     // fetch user details into recoil state in edit mode
     if (mode.edit) {
-      userActions.getById(id, role);
+      userActions.getTicketById(id);
     }
 
-    return userActions.resetUser;
+    return userActions.resetTicket;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     // set default form values after user set in recoil state (in edit mode)
-    if (mode.edit && user) {
-      reset(user);
+    if (mode.edit && ticket) {
+      reset(ticket);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user])
+  }, [ticket])
 
   function onSubmit(data) {
     return mode.add
-      ? createUser(data)
-      : updateUser(user.id, data);
+      ? createTicket(data)
+      : updateTicket(ticket.id, data);
   }
 
-  function createUser(data) {
-    return userActions.register(data)
+  function createTicket(data) {
+    return userActions.registerTicket(data)
       .then(() => {
-        history.push('/users');
-        alertActions.success('User added');
+        history.push('/api/tickets');
+        alertActions.success('Ticket added');
       });
   }
 
-  function updateUser(id, data) {
-    return userActions.update(id, data)
+  function updateTicket(id, data) {
+    return userActions.updateTicket(id, data)
       .then(() => {
-        history.push('/users');
-        alertActions.success('User updated');
+        history.push('/api/tickets');
+        alertActions.success('Ticket updated');
       });
   }
 
-  const loading = mode.edit && !user;
+  const loading = mode.edit && !ticket;
   return (
     <>
-      <h1>{mode.add ? 'Add User' : 'Edit User'}</h1>
+      <h1>{mode.add ? 'Add Ticket' : 'Edit Ticket'}</h1>
       {!loading &&
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-row">
             <div className="form-group col">
-              <label>First Name</label>
-              <input name="firstName" type="text" {...register('firstName')} className={`form-control ${errors.firstName ? 'is-invalid' : ''}`} />
-              <div className="invalid-feedback">{errors.firstName?.message}</div>
+              <label>Title</label>
+              <input name="title" type="text" {...register('title')} className={`form-control ${errors.title ? 'is-invalid' : ''}`} />
+              <div className="invalid-feedback">{errors.title?.message}</div>
             </div>
             <div className="form-group col">
-              <label>Last Name</label>
-              <input name="lastName" type="text" {...register('lastName')} className={`form-control ${errors.lastName ? 'is-invalid' : ''}`} />
-              <div className="invalid-feedback">{errors.lastName?.message}</div>
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-group col">
-              <label>Username</label>
-              <input name="username" type="text" {...register('username')} className={`form-control ${errors.username ? 'is-invalid' : ''}`} />
-              <div className="invalid-feedback">{errors.email?.message}</div>
-            </div>
-            <div className="form-group col">
-              <label>
-                Password
-                {mode.edit && <em className="ml-1">(Leave blank to keep the same password)</em>}
-              </label>
-              <input name="password" type="password" {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`} />
-              <div className="invalid-feedback">{errors.password?.message}</div>
+              <label>Description</label>
+              <input name="description" type="text" {...register('description')} className={`form-control ${errors.description ? 'is-invalid' : ''}`} />
+              <div className="invalid-feedback">{errors.description?.message}</div>
             </div>
           </div>
           <div className="form-group">
@@ -117,8 +95,8 @@ function AddEdit({ history, match }) {
               {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
               Save
             </button>
-            <button onClick={() => reset(user)} type="button" disabled={isSubmitting} className="btn btn-secondary">Reset</button>
-            <Link to="/users" className="btn btn-link">Cancel</Link>
+            <button onClick={() => reset(ticket)} type="button" disabled={isSubmitting} className="btn btn-secondary">Reset</button>
+            <Link to="/tickets" className="btn btn-link">Cancel</Link>
           </div>
         </form>
       }

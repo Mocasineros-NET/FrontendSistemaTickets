@@ -18,11 +18,15 @@ function useUserActions () {
         login,
         logout,
         register,
+        registerTicket,
         getAll,
         getAllTicketsByRole,
         getById,
+        getTicketById,
         update,
-        delete: _delete,
+        updateTicket,
+        deleteUser,
+        deleteTicket,
         resetUsers: useResetRecoilState(usersAtom),
         resetUser: useResetRecoilState(userAtom),
         resetTickets: useResetRecoilState(ticketsAtom),
@@ -53,6 +57,10 @@ function useUserActions () {
         return fetchWrapper.post(`${baseUrl}/users/register`, user);
     }
 
+    function registerTicket(ticket) {
+        return fetchWrapper.post(`${baseUrl}/api/Tickets`, ticket);
+    }
+
     function getAll() {
         return fetchWrapper.get(`${baseUrl}/users`).then(setUsers);
     }
@@ -64,15 +72,15 @@ function useUserActions () {
         }
         // manager
         if (role === 1) {
-            return fetchWrapper.get(`api/${baseUrl}/Tickets`).then(setTickets);
+            return fetchWrapper.get(`${baseUrl}/api/Tickets`).then(setTickets);
         }
         // engineer
         if (role === 2) {
-            return fetchWrapper.get(`api/${baseUrl}/GetMyAssignedTickets`).then(setTickets);
+            return fetchWrapper.get(`${baseUrl}/api/tickets/GetMyAssignedTickets`).then(setTickets);
         }
         // user
         if (role === 3) {
-            return fetchWrapper.get(`api/${baseUrl}/GetMyTickets`).then(setTickets);
+            return fetchWrapper.get(`${baseUrl}/api/tickets/GetMyTickets`).then(setTickets);
         }
     }
 
@@ -80,24 +88,35 @@ function useUserActions () {
         return fetchWrapper.get(`${baseUrl}/${id}`).then(setUser);
     }
 
+    function getTicketById(id) {
+        return fetchWrapper.get(`${baseUrl}/api/tickets/${id}`).then(setTicket);
+    }
+
     function update(id, params) {
         return fetchWrapper.put(`${baseUrl}/${id}`, params)
-            .then(x => {
-                // update stored user if the logged in user updated their own record
-                if (id === auth?.id) {
-                    // update local storage
-                    const user = { ...auth, ...params };
-                    localStorage.setItem('user', JSON.stringify(user));
+          .then(x => {
+              // update stored user if the logged in user updated their own record
+              if (id === auth?.id) {
+                  // update local storage
+                  const user = { ...auth, ...params };
+                  localStorage.setItem('user', JSON.stringify(user));
 
-                    // update auth user in recoil state
-                    setAuth(user);
-                }
-                return x;
-            });
+                  // update auth user in recoil state
+                  setAuth(user);
+              }
+              return x;
+          });
+    }
+
+    function updateTicket(id, params) {
+        return fetchWrapper.put(`${baseUrl}/api/Tickets/${id}`, params)
+          .then(x => {
+              return x;
+          });
     }
 
     // prefixed with underscored because delete is a reserved word in javascript
-    function _delete(id) {
+    function deleteUser(id) {
         setUsers(users => users.map(x => {
             // add isDeleting prop to user being deleted
             if (x.id === id) 
@@ -116,5 +135,21 @@ function useUserActions () {
                     logout();
                 }
             });
+    }
+
+    function deleteTicket(id) {
+        setTickets(tickets => tickets.map(x => {
+            // add isDeleting prop to user being deleted
+            if (x.id === id)
+                return { ...x, isDeleting: true };
+
+            return x;
+        }));
+
+        return fetchWrapper.delete(`${baseUrl}/api/tickets/${id}`)
+          .then(() => {
+              // remove user from list after deleting
+              setTickets(tickets => tickets.filter(x => x.id !== id));
+          });
     }
 }

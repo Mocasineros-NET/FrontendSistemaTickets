@@ -32,6 +32,7 @@ function List({ match }) {
           <th style={{ width: '30%' }}>User</th>
           <th style={{ width: '30%' }}>Title</th>
           <th style={{ width: '30%' }}>Description</th>
+          <th style={{ width: '30%' }}>Estado</th>
           <th style={{ width: '10%' }}></th>
         </tr>
         </thead>
@@ -41,9 +42,10 @@ function List({ match }) {
             <td>{ticket.user.username}</td>
             <td>{ticket.title}</td>
             <td>{ticket.description}</td>
+            <td>{ticket.isClosed ? "Abierto" : 'Cerrado'}</td>
             <td style={{ whiteSpace: 'nowrap' }}>
               <Link to={`${path}/edit/${ticket.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
-              <button onClick={() => userActions.delete(ticket.id)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={ticket.isDeleting}>
+              <button onClick={() => userActions.deleteTicket(ticket.id)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={ticket.isDeleting}>
                 {ticket.isDeleting
                   ? <span className="spinner-border spinner-border-sm"></span>
                   : <span>Delete</span>

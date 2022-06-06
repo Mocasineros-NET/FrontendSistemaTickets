@@ -7,7 +7,7 @@ import { history } from '_helpers';
 import { Home } from 'home';
 import { Users } from 'users';
 import { Account } from 'account';
-import { Tickets } from "./tickets/Tickets";
+import { Tickets } from "./tickets";
 
 export { App };
 
