@@ -19,6 +19,7 @@ function useUserActions () {
         logout,
         register,
         registerTicket,
+        registerComment,
         getAll,
         getAllTicketsByRole,
         getById,
@@ -59,6 +60,10 @@ function useUserActions () {
 
     function registerTicket(ticket) {
         return fetchWrapper.post(`${baseUrl}/api/Tickets`, ticket);
+    }
+
+    function registerComment(comment) {
+        return fetchWrapper.post(`${baseUrl}/api/Comment`, comment);
     }
 
     function getAll() {
