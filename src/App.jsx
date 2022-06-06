@@ -7,8 +7,7 @@ import { history } from '_helpers';
 import { Home } from 'home';
 import { Users } from 'users';
 import { Account } from 'account';
-import { LoginNew } from './account/Login';
-import { RegisterNew } from './account/Register';
+import { Tickets } from "./tickets/Tickets";
 
 export { App };
 
@@ -23,6 +22,7 @@ function App() {
                 <Switch>
                     <PrivateRoute exact path="/" component={Home} />
                     <PrivateRoute path="/users" component={Users} />
+                    <PrivateRoute path="/tickets" component={Tickets} />
                     <Route path="/account" component={Account} />
                     <Redirect from="*" to="/" />
                 </Switch>

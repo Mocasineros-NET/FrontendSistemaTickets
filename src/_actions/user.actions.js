@@ -1,31 +1,36 @@
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
 
 import { history, useFetchWrapper } from '_helpers';
-import { authAtom, usersAtom, userAtom } from '_state';
+import {authAtom, usersAtom, userAtom, ticketsAtom, ticketAtom} from '_state';
 
 export { useUserActions };
 
 function useUserActions () {
-    const baseUrl = `${process.env.REACT_APP_API_URL}/users`;
+    const baseUrl = `${process.env.REACT_APP_API_URL}`;
     const fetchWrapper = useFetchWrapper();
     const [auth, setAuth] = useRecoilState(authAtom);
     const setUsers = useSetRecoilState(usersAtom);
     const setUser = useSetRecoilState(userAtom);
+    const setTickets = useSetRecoilState(ticketsAtom);
+    const setTicket = useSetRecoilState(ticketAtom);
 
     return {
         login,
         logout,
         register,
         getAll,
+        getAllTicketsByRole,
         getById,
         update,
         delete: _delete,
         resetUsers: useResetRecoilState(usersAtom),
-        resetUser: useResetRecoilState(userAtom)
+        resetUser: useResetRecoilState(userAtom),
+        resetTickets: useResetRecoilState(ticketsAtom),
+        resetTicket: useResetRecoilState(ticketAtom)
     }
 
     function login({ username, password }) {
-        return fetchWrapper.post(`${baseUrl}/authenticate`, { username, password })
+        return fetchWrapper.post(`${baseUrl}/users/authenticate`, { username, password })
             .then(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
@@ -45,11 +50,30 @@ function useUserActions () {
     }
 
     function register(user) {
-        return fetchWrapper.post(`${baseUrl}/register`, user);
+        return fetchWrapper.post(`${baseUrl}/users/register`, user);
     }
 
     function getAll() {
-        return fetchWrapper.get(baseUrl).then(setUsers);
+        return fetchWrapper.get(`${baseUrl}/users`).then(setUsers);
+    }
+
+    function getAllTicketsByRole(role) {
+        // admin
+        if (role === 0) {
+            return fetchWrapper.get(`${baseUrl}/api/tickets`).then(setTickets);
+        }
+        // manager
+        if (role === 1) {
+            return fetchWrapper.get(`api/${baseUrl}/Tickets`).then(setTickets);
+        }
+        // engineer
+        if (role === 2) {
+            return fetchWrapper.get(`api/${baseUrl}/GetMyAssignedTickets`).then(setTickets);
+        }
+        // user
+        if (role === 3) {
+            return fetchWrapper.get(`api/${baseUrl}/GetMyTickets`).then(setTickets);
+        }
     }
 
     function getById(id) {

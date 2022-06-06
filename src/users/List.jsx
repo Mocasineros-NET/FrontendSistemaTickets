@@ -35,7 +35,7 @@ function List({ match }) {
                 </thead>
                 <tbody>
                     {users?.map(user =>
-                        <tr key={user.id}>
+                        <tr className="text-white" key={user.id}>
                             <td>{user.firstName}</td>
                             <td>{user.lastName}</td>
                             <td>{user.username}</td>

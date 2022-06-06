@@ -10,7 +10,19 @@ const userAtom = atom({
     default: null
 });
 
+const ticketsAtom = atom({
+    key: 'tickets',
+    default: null
+});
+
+const ticketAtom = atom({
+    key: 'ticket',
+    default: null
+});
+
 export { 
     usersAtom,
-    userAtom
+    userAtom,
+    ticketsAtom,
+    ticketAtom
 };
