@@ -37,6 +37,11 @@ function Nav() {
                       </Link>
                   </li>
                   <li>
+                      <Link to={{pathname: '/articles'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
+                          Articles
+                      </Link>
+                  </li>
+                  <li>
                       <Link to={{pathname: '/users'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
                           Users
                       </Link>

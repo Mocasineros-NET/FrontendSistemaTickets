@@ -8,7 +8,7 @@ import date from 'date-and-time';
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function View({ history, match }) {
   const { id } = match.params;
@@ -17,6 +17,7 @@ function View({ history, match }) {
   const [comment, setComment] = useState('');
   const location = useLocation();
   const { title, description, date, comments } = location.state;
+  console.log(location.state);
 
   const validationSchema = Yup.object().shape({
     text: Yup.string()
@@ -54,15 +55,17 @@ function View({ history, match }) {
           <div className="border-2 border-black">
             <span>{x.user.username}</span>
             <p>{x.text}</p>
+            <button className="btn" onClick={() => userActions.deleteComment(x.commentId)} >Eliminar</button>
           </div>
         )
       })}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input name="text" type="text" {...register ('text')} />
+        <input className="border border-2" name="text" type="text" {...register ('text')} />
         <button type="submit" disabled={isSubmitting} className="btn btn-primary mr-2">
           {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
           Save
         </button>
+        <Link to="/tickets" className="btn btn-link">Cancel</Link>
       </form>
     </>
   );

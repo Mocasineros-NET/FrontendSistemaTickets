@@ -8,6 +8,7 @@ import { Home } from 'home';
 import { Users } from 'users';
 import { Account } from 'account';
 import { Tickets } from "./tickets";
+import { Articles } from "./Articles";
 
 export { App };
 
@@ -23,6 +24,7 @@ function App() {
                     <PrivateRoute exact path="/" component={Home} />
                     <PrivateRoute path="/users" component={Users} />
                     <PrivateRoute path="/tickets" component={Tickets} />
+                    <PrivateRoute path="/articles" component={Articles} />
                     <Route path="/account" component={Account} />
                     <Redirect from="*" to="/" />
                 </Switch>

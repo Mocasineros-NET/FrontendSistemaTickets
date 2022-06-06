@@ -1,7 +1,7 @@
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
 
 import { history, useFetchWrapper } from '_helpers';
-import {authAtom, usersAtom, userAtom, ticketsAtom, ticketAtom} from '_state';
+import {authAtom, usersAtom, userAtom, ticketsAtom, ticketAtom, commentsAtom, commentAtom, articlesAtom, articleAtom } from '_state';
 
 export { useUserActions };
 
@@ -13,6 +13,10 @@ function useUserActions () {
     const setUser = useSetRecoilState(userAtom);
     const setTickets = useSetRecoilState(ticketsAtom);
     const setTicket = useSetRecoilState(ticketAtom);
+    const setComments = useSetRecoilState(commentsAtom);
+    const setComment = useSetRecoilState(commentAtom);
+    const setArticles = useSetRecoilState(articlesAtom);
+    const setArticle = useSetRecoilState(articleAtom);
 
     return {
         login,
@@ -20,18 +24,26 @@ function useUserActions () {
         register,
         registerTicket,
         registerComment,
+        registerArticle,
         getAll,
         getAllTicketsByRole,
+        getAllArticles,
         getById,
         getTicketById,
+        getArticleById,
         update,
         updateTicket,
+        updateArticle,
         deleteUser,
         deleteTicket,
+        deleteComment,
+        deleteArticle,
         resetUsers: useResetRecoilState(usersAtom),
         resetUser: useResetRecoilState(userAtom),
         resetTickets: useResetRecoilState(ticketsAtom),
-        resetTicket: useResetRecoilState(ticketAtom)
+        resetTicket: useResetRecoilState(ticketAtom),
+        resetArticles: useResetRecoilState(articlesAtom),
+        resetArticle: useResetRecoilState(articleAtom)
     }
 
     function login({ username, password }) {
@@ -62,12 +74,20 @@ function useUserActions () {
         return fetchWrapper.post(`${baseUrl}/api/Tickets`, ticket);
     }
 
+    function registerArticle(article) {
+        return fetchWrapper.post(`${baseUrl}/api/knowledgebasearticle`, article);
+    }
+
     function registerComment(comment) {
         return fetchWrapper.post(`${baseUrl}/api/Comment`, comment);
     }
 
     function getAll() {
         return fetchWrapper.get(`${baseUrl}/users`).then(setUsers);
+    }
+
+    function getAllArticles() {
+        return fetchWrapper.get(`${baseUrl}/api/knowledgebasearticle`).then(setArticles);
     }
 
     function getAllTicketsByRole(role) {
@@ -97,6 +117,10 @@ function useUserActions () {
         return fetchWrapper.get(`${baseUrl}/api/tickets/${id}`).then(setTicket);
     }
 
+    function getArticleById(id) {
+        return fetchWrapper.get(`${baseUrl}/api/knowledgebasearticle/${id}`).then(setTicket);
+    }
+
     function update(id, params) {
         return fetchWrapper.put(`${baseUrl}/${id}`, params)
           .then(x => {
@@ -115,6 +139,13 @@ function useUserActions () {
 
     function updateTicket(id, params) {
         return fetchWrapper.put(`${baseUrl}/api/Tickets/${id}`, params)
+          .then(x => {
+              return x;
+          });
+    }
+
+    function updateArticle(id, params) {
+        return fetchWrapper.put(`${baseUrl}/api/knowledgebasearticle/${id}`, params)
           .then(x => {
               return x;
           });
@@ -156,5 +187,26 @@ function useUserActions () {
               // remove user from list after deleting
               setTickets(tickets => tickets.filter(x => x.id !== id));
           });
+    }
+
+    function deleteArticle(id) {
+        setArticles(articles => articles.map(x => {
+            // add isDeleting prop to user being deleted
+            if (x.id === id)
+                return { ...x, isDeleting: true };
+
+            return x;
+        }));
+
+        return fetchWrapper.delete(`${baseUrl}/api/knowledgebasearticle/${id}`)
+          .then(() => {
+              // remove user from list after deleting
+              setArticles(articles => articles.filter(x => x.id !== id));
+          });
+    }
+
+    function deleteComment(id) {
+        return fetchWrapper.delete(`${baseUrl}/api/comment/${id}`)
+          .then();
     }
 }
