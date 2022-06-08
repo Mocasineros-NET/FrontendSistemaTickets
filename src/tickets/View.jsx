@@ -9,8 +9,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
-function View({ match }) {
+function View({ history, match }) {
   const { id } = match.params;
+  const { path } = match;
   const userActions = useUserActions();
   const ticket = useRecoilValue(ticketAtom);
   const validationSchema = Yup.object().shape({
@@ -32,9 +33,17 @@ function View({ match }) {
     return createComment(id, data);
   }
 
-  function createComment(id, data) {
+  function createComment(data) {
     data.ticketId = id;
-    return userActions.registerComment(data)
+    return userActions.registerComment(data).then(() => {
+      history.go(0);
+    });
+  }
+
+  function removeComment(id) {
+    return userActions.deleteComment(id).then(() => {
+      history.go(0);
+    });
   }
 
   const loading = !ticket;
@@ -48,10 +57,10 @@ function View({ match }) {
           <p>{ticket.createdAt.substr(0, 10)}</p>
           {ticket.comments.map((x) => {
             return (
-              <div className="border-2 border-black">
+              <div className="border-2 border-black" key={x.commentId}>
                 <span>{x.user.username}</span>
                 <p>{x.text}</p>
-                <button className="btn" onClick={() => userActions.deleteComment(x.commentId)} >Eliminar</button>
+                <button className="btn" onClick={() => removeComment(x.commentId)} >Eliminar</button>
               </div>
             )
           })}

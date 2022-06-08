@@ -75,6 +75,7 @@ function useUserActions () {
     }
 
     function registerArticle(article) {
+        console.log(article);
         return fetchWrapper.post(`${baseUrl}/api/knowledgebasearticle`, article);
     }
 
