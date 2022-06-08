@@ -11,8 +11,8 @@ import { useUserActions, useAlertActions } from '_actions';
 export { AddEdit };
 
 function AddEdit({ history, match }) {
-  const { knowledgeBaseArticleId } = match.params;
-  const mode = { add: !knowledgeBaseArticleId, edit: !!knowledgeBaseArticleId };
+  const { id } = match.params;
+  const mode = { add: !id, edit: !!id };
   const userActions = useUserActions();
   const alertActions = useAlertActions();
   const article = useRecoilValue(articleAtom);
@@ -33,7 +33,7 @@ function AddEdit({ history, match }) {
   useEffect(() => {
     // fetch user details into recoil state in edit mode
     if (mode.edit) {
-      userActions.getArticleById(knowledgeBaseArticleId);
+      userActions.getArticleById(id);
     }
 
     return userActions.resetTicket;
@@ -64,8 +64,8 @@ function AddEdit({ history, match }) {
       });
   }
 
-  function updateArticle(knowledgeBaseArticleId, data) {
-    return userActions.updateArticle(knowledgeBaseArticleId, data)
+  function updateArticle(id, data) {
+    return userActions.updateArticle(id, data)
       .then(() => {
         history.push('/api/knowledgeBaseArticle');
         alertActions.success('Article updated');

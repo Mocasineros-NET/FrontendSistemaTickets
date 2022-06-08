@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {useRecoilValue} from "recoil";
 
 import { ticketAtom } from "../_state";
@@ -7,16 +7,12 @@ import { useUserActions} from "../_actions";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function View({ history, match }) {
+function View({ match }) {
   const { id } = match.params;
   const userActions = useUserActions();
   const ticket = useRecoilValue(ticketAtom);
-  const location = useLocation();
-  const { title, description, date, comments } = location.state;
-  console.log(location.state);
-
   const validationSchema = Yup.object().shape({
     text: Yup.string()
       .required("Comment box can't be empty")
@@ -25,15 +21,15 @@ function View({ history, match }) {
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   // get functions to build form with useForm() hook
-  const { register, handleSubmit, reset, formState } = useForm(formOptions);
-  const { errors, isSubmitting } = formState;
+  const { register, handleSubmit, formState } = useForm(formOptions);
+  const { isSubmitting } = formState;
 
   useEffect(() => {
     userActions.getTicketById(id).then(() => userActions.resetTicket);
   }, []);
 
-  function onSubmit(data) {
-    return createComment(ticket.id, data);
+  function onSubmit(id, data) {
+    return createComment(id, data);
   }
 
   function createComment(id, data) {
@@ -41,29 +37,39 @@ function View({ history, match }) {
     return userActions.registerComment(data)
   }
 
+  const loading = !ticket;
   return (
     <>
       <h1>Tickets</h1>
-      <p>{title}</p>
-      <p>{description}</p>
-      <p>{date}</p>
-      {comments.map((x) => {
-        return (
-          <div className="border-2 border-black">
-            <span>{x.user.username}</span>
-            <p>{x.text}</p>
-            <button className="btn" onClick={() => userActions.deleteComment(x.commentId)} >Eliminar</button>
-          </div>
-        )
-      })}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input className="border border-2" name="text" type="text" {...register ('text')} />
-        <button type="submit" disabled={isSubmitting} className="btn btn-primary mr-2">
-          {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
-          Save
-        </button>
-        <Link to="/tickets" className="btn btn-link">Cancel</Link>
-      </form>
+      {!loading &&
+        <>
+          <p>{ticket.title}</p>
+          <p>{ticket.description}</p>
+          <p>{ticket.createdAt.substr(0, 10)}</p>
+          {ticket.comments.map((x) => {
+            return (
+              <div className="border-2 border-black">
+                <span>{x.user.username}</span>
+                <p>{x.text}</p>
+                <button className="btn" onClick={() => userActions.deleteComment(x.commentId)} >Eliminar</button>
+              </div>
+            )
+          })}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <input className="border border-2" name="text" type="text" {...register ('text')} />
+            <button type="submit" disabled={isSubmitting} className="btn btn-primary mr-2">
+              {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+              Save
+            </button>
+            <Link to="/tickets" className="btn btn-link">Cancel</Link>
+          </form>
+        </>
+      }
+      {loading &&
+        <div className="text-center p-3">
+          <span className="spinner-border spinner-border-lg align-center"></span>
+        </div>
+      }
     </>
   );
 }

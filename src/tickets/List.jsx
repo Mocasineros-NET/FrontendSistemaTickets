@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
@@ -12,7 +12,6 @@ function List({ match }) {
   const role = JSON.parse(localStorage.getItem('user')).role;
   const tickets = useRecoilValue(ticketsAtom);
   const userActions = useUserActions();
-  const [ticketInfo, setTicketInfo] = useState([]);
 
   useEffect(() => {
     userActions.getAllTicketsByRole(role);
@@ -42,15 +41,7 @@ function List({ match }) {
             <td>{ticket.title}</td>
             <td>{ticket.isClosed ? "Abierto" : 'Cerrado'}</td>
             <td style={{ whiteSpace: 'nowrap' }}>
-              <Link to={{
-                pathname: `${path}/${ticket.id}`,
-                state: {
-                  title: ticket.title,
-                  description: ticket.description,
-                  date: ticket.createdAt.substr(0, 10),
-                  comments: ticket.comments
-                },
-              }} className="btn btn-sm btn-primary mr-1 bg-green-400 text-black border-none hover:bg-green-500">View</Link>
+              <Link to={{pathname: `${path}/${ticket.id}`}} className="btn btn-sm btn-primary mr-1 bg-green-400 text-black border-none hover:bg-green-500">View</Link>
               <Link to={`${path}/edit/${ticket.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
               <button onClick={() => userActions.deleteTicket(ticket.id)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={ticket.isDeleting}>
                 {ticket.isDeleting

@@ -118,7 +118,7 @@ function useUserActions () {
     }
 
     function getArticleById(id) {
-        return fetchWrapper.get(`${baseUrl}/api/knowledgebasearticle/${id}`).then(setTicket);
+        return fetchWrapper.get(`${baseUrl}/api/knowledgebasearticle/${id}`).then(setArticle);
     }
 
     function update(id, params) {

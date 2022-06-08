@@ -1,28 +1,35 @@
 import React from 'react';
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {useRecoilValue} from "recoil";
+import { useUserActions} from "../_actions";
 
 import { articleAtom } from "../_state";
-import { useUserActions} from "../_actions";
-import { Link, useLocation } from "react-router-dom";
 
-function View({ history, match }) {
-  const { knowledgeBaseArticleId } = match.params;
-  const id = knowledgeBaseArticleId;
+function View({ match }) {
+  const { id } = match.params;
   const userActions = useUserActions();
-  const location = useLocation();
-  const { title, author, content } = location.state;
+  const article = useRecoilValue(articleAtom);
 
   useEffect(() => {
     userActions.getArticleById(id).then(() => userActions.resetArticle);
   }, []);
 
+  const loading = !article;
   return (
     <>
       <h1>Articles</h1>
-      <p>{title}</p>
-      <p>{author}</p>
-      <p>{content}</p>
+      {!loading &&
+        <>
+          <p>{article.title}</p>
+          <p>{article.author.username}</p>
+          <p>{article.content}</p>
+        </>
+      }
+      {loading &&
+        <div className="text-center p-3">
+          <span className="spinner-border spinner-border-lg align-center"></span>
+        </div>
+      }
     </>
   );
 }

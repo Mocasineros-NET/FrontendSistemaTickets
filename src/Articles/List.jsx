@@ -9,7 +9,6 @@ export { List };
 
 function List({ match }) {
   const { path } = match;
-  const role = JSON.parse(localStorage.getItem('user')).role;
   const articles = useRecoilValue(articlesAtom);
   const userActions = useUserActions();
 
@@ -41,14 +40,7 @@ function List({ match }) {
             <td>{article.author.username}</td>
             <td>{article.tags.forEach((x) => `${x.name} `)}</td>
             <td style={{ whiteSpace: 'nowrap' }}>
-              <Link to={{
-                pathname: `${path}/${article.knowledgeBaseArticleId}`,
-                state: {
-                  title: article.title,
-                  author: article.author.username,
-                  content: article.content,
-                },
-              }} className="btn btn-sm btn-primary mr-1 bg-green-400 text-black border-none hover:bg-green-500">View</Link>
+              <Link to={{pathname: `${path}/${article.knowledgeBaseArticleId}`}} className="btn btn-sm btn-primary mr-1 bg-green-400 text-black border-none hover:bg-green-500">View</Link>
               <Link to={`${path}/edit/${article.knowledgeBaseArticleId}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
               <button onClick={() => userActions.deleteArticle(article.knowledgeBaseArticleId)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={article.isDeleting}>
                 {article.isDeleting
