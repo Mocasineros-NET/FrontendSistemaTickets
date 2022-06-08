@@ -184,7 +184,7 @@ function useUserActions () {
 
         return fetchWrapper.delete(`${baseUrl}/api/tickets/${id}`)
           .then(() => {
-              // remove user from list after deleting
+              // remove ticket from list after deleting
               setTickets(tickets => tickets.filter(x => x.id !== id));
           });
     }
@@ -192,7 +192,7 @@ function useUserActions () {
     function deleteArticle(id) {
         setArticles(articles => articles.map(x => {
             // add isDeleting prop to user being deleted
-            if (x.id === id)
+            if (x.knowledgeBaseArticleId === id)
                 return { ...x, isDeleting: true };
 
             return x;
@@ -200,8 +200,8 @@ function useUserActions () {
 
         return fetchWrapper.delete(`${baseUrl}/api/knowledgebasearticle/${id}`)
           .then(() => {
-              // remove user from list after deleting
-              setArticles(articles => articles.filter(x => x.id !== id));
+              // remove article from list after deleting
+              setArticles(articles => articles.filter(x => x.knowledgeBaseArticleId !== id));
           });
     }
 

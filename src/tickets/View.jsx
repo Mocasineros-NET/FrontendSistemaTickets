@@ -4,7 +4,6 @@ import {useRecoilValue} from "recoil";
 
 import { ticketAtom } from "../_state";
 import { useUserActions} from "../_actions";
-import date from 'date-and-time';
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -14,7 +13,6 @@ function View({ history, match }) {
   const { id } = match.params;
   const userActions = useUserActions();
   const ticket = useRecoilValue(ticketAtom);
-  const [comment, setComment] = useState('');
   const location = useLocation();
   const { title, description, date, comments } = location.state;
   console.log(location.state);
@@ -40,7 +38,6 @@ function View({ history, match }) {
 
   function createComment(id, data) {
     data.ticketId = id;
-    setComment(data.text);
     return userActions.registerComment(data)
   }
 

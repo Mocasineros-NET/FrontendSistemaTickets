@@ -17,17 +17,15 @@ function Nav() {
     return (
       <div className="navbar bg-slate-800">
           <div className="flex-1">
-              <Link exact to={{pathname: '/'}} className="hover:no-underline hover:text-white hover:bg-slate-800">
-                  <a className="btn btn-ghost normal-case text-xl text-white">
-                      <img src={Logo} alt="logo" className="h-8 mr-2" />
-                      MocasinerosTickets
-                  </a>
+              <Link to={{pathname: '/'}} className="hover:no-underline hover:text-white hover:bg-slate-800 btn btn-ghost normal-case text-xl text-white">
+                  <img src={Logo} alt="logo" className="h-8 mr-2" />
+                  MocasinerosTickets
               </Link>
           </div>
           <div className="flex-none">
               <ul className="menu menu-horizontal p-0 text-white">
                   <li>
-                      <Link exact to={{pathname: '/'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
+                      <Link to={{pathname: '/'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
                           Home
                       </Link>
                   </li>
@@ -47,7 +45,7 @@ function Nav() {
                       </Link>
                   </li>
                   <li>
-                      <Link onClick={userActions.logout} className="hover:no-underline hover:text-white hover:bg-slate-600">
+                      <Link to={{pathname: '/'}} onClick={userActions.logout} className="hover:no-underline hover:text-white hover:bg-slate-600">
                           Logout
                       </Link>
                   </li>
