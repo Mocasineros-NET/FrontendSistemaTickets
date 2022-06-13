@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
-import { ticketsAtom } from "../_state";
+import { ticketsAtom, usersAtom } from "../_state";
 import { useUserActions } from '_actions';
 
 export { List };
@@ -11,12 +11,16 @@ function List({ match }) {
   const { path } = match;
   const role = JSON.parse(localStorage.getItem('user')).role;
   const tickets = useRecoilValue(ticketsAtom);
+  const users = useRecoilValue(usersAtom);
   const userActions = useUserActions();
 
   useEffect(() => {
     userActions.getAllTicketsByRole(role);
+    if (role === 0 || role === 1) {
+      userActions.getAll();
+    }
 
-    return userActions.resetTickets;
+    return userActions.resetTickets && userActions.resetUsers;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -30,7 +34,7 @@ function List({ match }) {
         <tr className="text-white">
           <th style={{ width: '30%' }}>User</th>
           <th style={{ width: '30%' }}>Title</th>
-          <th style={{ width: '30%' }}>Estado</th>
+          <th style={{ width: '30%' }}>Status</th>
           <th style={{ width: '10%' }}></th>
         </tr>
         </thead>
@@ -42,6 +46,12 @@ function List({ match }) {
             <td>{ticket.isClosed ? "Abierto" : 'Cerrado'}</td>
             <td style={{ whiteSpace: 'nowrap' }}>
               <Link to={{pathname: `${path}/${ticket.id}`}} className="btn btn-sm btn-primary mr-1 bg-green-400 text-black border-none hover:bg-green-500">View</Link>
+              {role === 0 && <div className="dropdown">
+                <label tabIndex="0" className="btn m-1">Assign</label>
+                <ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                  {users?.map(user => <li><a>{user.firstName+' '+user.lastName}</a></li>)}
+                </ul>
+              </div>}
               <Link to={`${path}/edit/${ticket.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
               <button onClick={() => userActions.deleteTicket(ticket.id)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={ticket.isDeleting}>
                 {ticket.isDeleting

@@ -20,6 +20,8 @@ function Register({ history }) {
       .required('Last Name is required'),
     username: Yup.string()
       .required('Username is required'),
+    email: Yup.string()
+      .required('Email is required'),
     password: Yup.string()
       .required('Password is required')
       .min(6, 'Password must be at least 6 characters')
@@ -40,7 +42,7 @@ function Register({ history }) {
 
   return (
     <div className="flex items-center justify-center">
-      <form onSubmit={handleSubmit(onSubmit)} className="card w-[20%] h-[610px]">
+      <form onSubmit={handleSubmit(onSubmit)} className="card w-[20%] h-[680px]">
         <div className="card-body">
           <Logo />
           <h1 className="card-title text-5xl mt-2 mb-2">Sign up</h1>
@@ -54,6 +56,11 @@ function Register({ history }) {
           </label>
           <input name="lastName" type="text" {...register('lastName')} className={`form-control ${errors.lastName ? 'is-invalid' : ''} input input-bordered w-full max-w-xs bg-slate-200`} />
           <div className="invalid-feedback">{errors.lastName?.message}</div>
+          <label className="label m-0 p-0">
+            <span className="label-text text-slate-500 font-bold">Email</span>
+          </label>
+          <input name="username" type="text" {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''} input input-bordered w-full max-w-xs bg-slate-200`} />
+          <div className="invalid-feedback">{errors.email?.message}</div>
           <label className="label m-0 p-0">
             <span className="label-text text-slate-500 font-bold">Username</span>
           </label>
