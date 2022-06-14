@@ -7,7 +7,7 @@ import { useAlertActions, useUserActions } from "../_actions";
 
 export { List };
 
-function List({ match }) {
+function List({ history, match }) {
   const { path } = match;
   const role = JSON.parse(localStorage.getItem('user')).role;
   const alertActions = useAlertActions();
@@ -27,14 +27,21 @@ function List({ match }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onClick = (ticketId, engineerId) => {
+  const onClickAssign = (ticketId, engineerId) => {
     const data = {
       engineerId: engineerId
     }
     return userActions.assignTicket(ticketId, data)
       .then(() => {
         alertActions.success('Ticked assigned')
-      })
+      }).then(() => history.go(0));
+  };
+
+  const onClickUnAssign = (ticketId) => {
+    return userActions.unAssignTicket(ticketId)
+      .then(() => {
+        alertActions.success('Ticked Unassigned')
+      }).then(() => history.go(0));
   };
 
   return (
@@ -59,10 +66,25 @@ function List({ match }) {
             <td style={{ whiteSpace: 'nowrap' }}>
               <Link to={{pathname: `${path}/${ticket.id}`}} className="btn btn-sm btn-primary mr-1 bg-green-400 text-black border-none hover:bg-green-500">View</Link>
               {role === 0 && <div className="dropdown">
-                <label tabIndex="0" className="btn m-1">Assign</label>
-                <ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                  {users?.map(user => <li key={user.id}><a onClick={() => onClick(ticket.id, user.id)}>{user.firstName+' '+user.lastName}</a></li>)}
-                </ul>
+                {ticket.engineerId === null &&
+                  <>
+                    <label tabIndex="0" className="btn m-1">Assign</label>
+                    <ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                      {users?.map(user => {
+                        if (user.role === 2) {
+                          return <li key={user.id}>
+                            <a onClick={() => onClickAssign(ticket.id, user.id)}>{user.firstName+' '+user.lastName}</a>
+                          </li>
+                        }
+                      })}
+                    </ul>
+                  </>
+                }
+                {ticket.engineerId !== null &&
+                  <>
+                    <button onClick={() => onClickUnAssign(ticket.id)} tabIndex="0" className="btn m-1 bg-yellow-600 text-white">Unassign</button>
+                  </>
+                }
               </div>}
               <Link to={`${path}/edit/${ticket.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
               <button onClick={() => userActions.deleteTicket(ticket.id)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={ticket.isDeleting}>

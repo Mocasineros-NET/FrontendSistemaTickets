@@ -20,6 +20,7 @@ function useUserActions () {
         login,
         logout,
         assignTicket,
+        unAssignTicket,
         register,
         registerTicket,
         registerComment,
@@ -67,6 +68,10 @@ function useUserActions () {
 
     function assignTicket(ticketId, engineerId) {
         return fetchWrapper.post(`${baseUrl}//api/Tickets/Assign/${ticketId}`, engineerId);
+    }
+
+    function unAssignTicket(ticketId) {
+        return fetchWrapper.post(`${baseUrl}//api/Tickets/Unassign/${ticketId}`);
     }
 
     function register(user) {
