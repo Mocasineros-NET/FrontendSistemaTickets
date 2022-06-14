@@ -51,7 +51,7 @@ function useUserActions () {
                 localStorage.setItem('user', JSON.stringify(user));
                 setAuth(user);
 
-                // get return url from location state or default to home page
+                // get return url from location state or default to Home page
                 const { from } = history.location.state || { from: { pathname: '/' } };
                 history.push(from);
             });
@@ -61,7 +61,7 @@ function useUserActions () {
         // remove user from local storage, set auth state to null and redirect to login page
         localStorage.removeItem('user');
         setAuth(null);
-        history.push('/account/login');
+        history.push('/Account/login');
     }
 
     function register(user) {

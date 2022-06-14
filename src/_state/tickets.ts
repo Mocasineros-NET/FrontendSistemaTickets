@@ -2,7 +2,7 @@ import { StateCreator } from "./StateCreator";
 
 const ticketsInitializer = () => {
   const stateCreator = new StateCreator();
-  return stateCreator.factoryMethod("tickets", null);
+  return stateCreator.factoryMethod("Tickets", null);
 };
 
 const ticketInitializer = () => {

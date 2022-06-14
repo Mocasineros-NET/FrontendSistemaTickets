@@ -30,7 +30,7 @@ function Nav() {
                       </Link>
                   </li>
                   <li>
-                      <Link to={{pathname: '/tickets'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
+                      <Link to={{pathname: '/Tickets'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
                           Tickets
                       </Link>
                   </li>
@@ -40,7 +40,7 @@ function Nav() {
                       </Link>
                   </li>
                   <li>
-                      <Link to={{pathname: '/users'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
+                      <Link to={{pathname: '/Users'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
                           Users
                       </Link>
                   </li>

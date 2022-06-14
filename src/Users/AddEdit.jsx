@@ -65,7 +65,7 @@ function AddEdit({ history, match }) {
     function createUser(data) {
         return userActions.register(data)
             .then(() => {
-                history.push('/users');
+                history.push('/Users');
                 alertActions.success('User added');
             });
     }
@@ -73,7 +73,7 @@ function AddEdit({ history, match }) {
     function updateUser(id, data) {
         return userActions.update(id, data)
             .then(() => {
-                history.push('/users');
+                history.push('/Users');
                 alertActions.success('User updated');
             });
     }

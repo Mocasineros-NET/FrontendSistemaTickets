@@ -59,7 +59,7 @@ function AddEdit({ history, match }) {
   function createTicket(data) {
     return userActions.registerTicket(data)
       .then(() => {
-        history.push('/api/tickets');
+        history.push('/api/Tickets');
         alertActions.success('Ticket added');
       });
   }
@@ -67,7 +67,7 @@ function AddEdit({ history, match }) {
   function updateTicket(id, data) {
     return userActions.updateTicket(id, data)
       .then(() => {
-        history.push('/api/tickets');
+        history.push('/api/Tickets');
         alertActions.success('Ticket updated');
       });
   }

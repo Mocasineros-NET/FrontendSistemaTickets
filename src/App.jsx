@@ -4,10 +4,10 @@ import { useRecoilValue } from 'recoil';
 import { authAtom } from './_state';
 import { Nav, Alert, PrivateRoute } from './_components';
 import { history } from './_helpers';
-import { Home } from './home';
-import { Users } from './users';
-import { Account } from './account';
-import { Tickets } from "./tickets";
+import { Home } from './Home';
+import { Users } from './Users';
+import { Account } from './Account';
+import { Tickets } from "./Tickets";
 import { Articles } from "./Articles";
 
 export { App };

@@ -13,7 +13,7 @@ function Account({ history, match }) {
     const { path } = match;
 
     useEffect(() => {
-        // redirect to home if already logged in
+        // redirect to Home if already logged in
         if (auth) history.push('/');
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
