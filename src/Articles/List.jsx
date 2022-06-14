@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
@@ -28,7 +28,7 @@ function List({ match }) {
         <thead>
         <tr className="text-white">
           <th style={{ width: '30%' }}>Title</th>
-          <th style={{ width: '30%' }}>Autor</th>
+          <th style={{ width: '30%' }}>Author</th>
           <th style={{ width: '30%' }}>Tags</th>
           <th style={{ width: '10%' }}></th>
         </tr>

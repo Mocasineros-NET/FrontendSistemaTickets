@@ -26,7 +26,7 @@ function List({ match }) {
             <Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">Add User</Link>
             <table className="table table-striped">
                 <thead>
-                    <tr>
+                    <tr className="text-white">
                         <th style={{ width: '30%' }}>First Name</th>
                         <th style={{ width: '30%' }}>Last Name</th>
                         <th style={{ width: '30%' }}>Username</th>

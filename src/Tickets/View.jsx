@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 
 function View({ history, match }) {
   const { id } = match.params;
-  const { path } = match;
   const userActions = useUserActions();
   const ticket = useRecoilValue(ticketAtom);
   const validationSchema = Yup.object().shape({
@@ -49,18 +48,50 @@ function View({ history, match }) {
   const loading = !ticket;
   return (
     <>
-      <h1>Tickets</h1>
       {!loading &&
         <>
-          <p>{ticket.title}</p>
+          <h1 className="font-black text-2xl mb-3">{ticket.title}</h1>
+          <div className="grid grid-cols-[200px_minmax(900px,_1fr)]">
+            <span className="text-slate-500">Status</span>
+            <p className="font-bold">{ticket.isClosed ? "Abierto" : 'Cerrado'}</p>
+          </div>
+          <div className="grid grid-cols-[200px_minmax(900px,_1fr)]">
+            <span className="text-slate-500">Created by</span>
+            <p className="font-bold">
+              <div className="avatar placeholder mr-1">
+                <div className="bg-neutral-focus text-neutral-content rounded-full w-5">
+                  <span className="text-xs">A</span>
+                </div>
+              </div>
+              {ticket.user.firstName+' '+ticket.user.lastName}
+            </p>
+          </div>
+          <div className="grid grid-cols-[200px_minmax(900px,_1fr)]">
+            <span className="text-slate-500">Assigne</span>
+            <p className="font-bold">{ticket.engineer && (
+              <>
+                <div className="avatar placeholder mr-1">
+                  <div className="bg-neutral-focus text-neutral-content rounded-full w-5">
+                    <span className="text-xs">A</span>
+                  </div>
+                </div>
+                {ticket.engineer.firstName+' '+ticket.engineer.lastName}
+              </>
+            )}{!ticket.engineer && 'None'}</p>
+          </div>
+          <div className="grid grid-cols-[200px_minmax(900px,_1fr)]">
+            <span className="text-slate-500">Date</span>
+            <p className="font-bold">{ticket.createdAt.substr(0, 10)}</p>
+          </div>
+          <hr className="my-3"/>
           <p>{ticket.description}</p>
-          <p>{ticket.createdAt.substr(0, 10)}</p>
+          <hr className="my-3"/>
           {ticket.comments.map((x) => {
             return (
               <div className="border-2 border-black" key={x.commentId}>
                 <span>{x.user.username}</span>
                 <p>{x.text}</p>
-                <button className="btn" onClick={() => removeComment(x.commentId)} >Eliminar</button>
+                <button className="btn" onClick={() => removeComment(x.commentId)} >Delete</button>
               </div>
             )
           })}

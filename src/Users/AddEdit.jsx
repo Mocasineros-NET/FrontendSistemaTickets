@@ -23,6 +23,8 @@ function AddEdit({ history, match }) {
             .required('First Name is required'),
         lastName: Yup.string()
             .required('Last Name is required'),
+        email: Yup.string()
+          .required('Email is required'),
         username: Yup.string()
             .required('Username is required'),
         password: Yup.string()
@@ -98,10 +100,17 @@ function AddEdit({ history, match }) {
                     </div>
                     <div className="form-row">
                         <div className="form-group col">
+                            <label>Email</label>
+                            <input name="email" type="text" {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`} />
+                            <div className="invalid-feedback">{errors.email?.message}</div>
+                        </div>
+                        <div className="form-group col">
                             <label>Username</label>
                             <input name="username" type="text" {...register('username')} className={`form-control ${errors.username ? 'is-invalid' : ''}`} />
                             <div className="invalid-feedback">{errors.email?.message}</div>
                         </div>
+                    </div>
+                    <div className="form-row">
                         <div className="form-group col">
                             <label>
                                 Password
