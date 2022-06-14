@@ -2,15 +2,17 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
-import { ticketsAtom } from "../_state";
-import { useUserActions } from "../_actions";
+import { ticketsAtom, usersAtom } from "../_state";
+import { useAlertActions, useUserActions } from "../_actions";
 
 export { List };
 
 function List({ match }) {
   const { path } = match;
   const role = JSON.parse(localStorage.getItem('user')).role;
+  const alertActions = useAlertActions();
   const tickets = useRecoilValue(ticketsAtom);
+  const users = useRecoilValue(usersAtom);
   const userActions = useUserActions();
 
   useEffect(() => {
@@ -24,6 +26,14 @@ function List({ match }) {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const onClick = (ticketId, engineerId) => {
+    return userActions.assignTicket(ticketId, engineerId)
+      .then(() => {
+        history.push('/api/Tickets');
+        alertActions.success('Ticked assigned')
+      })
+  };
 
   return (
     <div>
@@ -49,7 +59,7 @@ function List({ match }) {
               {role === 0 && <div className="dropdown">
                 <label tabIndex="0" className="btn m-1">Assign</label>
                 <ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                  {users?.map(user => <li><a>{user.firstName+' '+user.lastName}</a></li>)}
+                  {users?.map(user => <li key={user.id}><a onClick={() => onClick(ticket.id, user.id)}>{user.firstName+' '+user.lastName}</a></li>)}
                 </ul>
               </div>}
               <Link to={`${path}/edit/${ticket.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>

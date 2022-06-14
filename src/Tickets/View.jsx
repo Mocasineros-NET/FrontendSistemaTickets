@@ -57,18 +57,18 @@ function View({ history, match }) {
           </div>
           <div className="grid grid-cols-[200px_minmax(900px,_1fr)]">
             <span className="text-slate-500">Created by</span>
-            <p className="font-bold">
+            <span className="font-bold">
               <div className="avatar placeholder mr-1">
                 <div className="bg-neutral-focus text-neutral-content rounded-full w-5">
                   <span className="text-xs">A</span>
                 </div>
               </div>
               {ticket.user.firstName+' '+ticket.user.lastName}
-            </p>
+            </span>
           </div>
           <div className="grid grid-cols-[200px_minmax(900px,_1fr)]">
             <span className="text-slate-500">Assigne</span>
-            <p className="font-bold">{ticket.engineer && (
+            <span className="font-bold">{ticket.engineer && (
               <>
                 <div className="avatar placeholder mr-1">
                   <div className="bg-neutral-focus text-neutral-content rounded-full w-5">
@@ -77,7 +77,7 @@ function View({ history, match }) {
                 </div>
                 {ticket.engineer.firstName+' '+ticket.engineer.lastName}
               </>
-            )}{!ticket.engineer && 'None'}</p>
+            )}{!ticket.engineer && 'None'}</span>
           </div>
           <div className="grid grid-cols-[200px_minmax(900px,_1fr)]">
             <span className="text-slate-500">Date</span>

@@ -19,6 +19,7 @@ function useUserActions () {
     return {
         login,
         logout,
+        assignTicket,
         register,
         registerTicket,
         registerComment,
@@ -62,6 +63,10 @@ function useUserActions () {
         localStorage.removeItem('user');
         setAuth(null);
         history.push('/Account/login');
+    }
+
+    function assignTicket(ticketId, engineerId) {
+        return fetchWrapper.post(`${baseUrl}//api/Tickets/Assign/${ticketId}`, engineerId);
     }
 
     function register(user) {
