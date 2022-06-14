@@ -28,9 +28,11 @@ function List({ match }) {
   }, []);
 
   const onClick = (ticketId, engineerId) => {
-    return userActions.assignTicket(ticketId, engineerId)
+    const data = {
+      engineerId: engineerId
+    }
+    return userActions.assignTicket(ticketId, data)
       .then(() => {
-        history.push('/api/Tickets');
         alertActions.success('Ticked assigned')
       })
   };

@@ -89,6 +89,30 @@ function AddEdit({ history, match }) {
               <input name="content" type="text" {...register('content')} className={`form-control ${errors.content ? 'is-invalid' : ''}`} />
               <div className="invalid-feedback">{errors.content?.message}</div>
             </div>
+            <div className="form-group col">
+              <label>Tags</label>
+              <div className="flex">
+                <select className="select w-full max-w-xs text-black bg-white border-black">
+                  <option disabled selected>Pick your favorite Simpson</option>
+                  <option value="1">Homer</option>
+                  <option value="2">Marge</option>
+                  <option value="3">Bart</option>
+                  <option value="4">Lisa</option>
+                  <option value="5">Maggie</option>
+                </select>
+                <label htmlFor="my-modal" className="btn modal-button text-white">+</label>
+              </div>
+              <input type="checkbox" id="my-modal" className="modal-toggle" />
+              <div className="modal">
+                <div className="modal-box bg-white">
+                  <h3 className="font-bold text-lg">Add Tags</h3>
+                  <p className="py-4">You've been selected for a change to get a...</p>
+                  <div className="modal-action">
+                    <label htmlFor="my-modal" className="btn">Yay!</label>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="form-group">
             <button type="submit" disabled={isSubmitting} className="btn btn-primary mr-2">
