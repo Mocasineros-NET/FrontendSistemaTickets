@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import Logo from '../_assets/logo.png';
 import { useRecoilValue } from 'recoil';
 
-import { authAtom } from '_state';
-import { useUserActions } from '_actions';
+import { authAtom } from "../_state";
+import { useUserActions} from "../_actions";
 
 export { Nav };
 

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
-import { authAtom } from '_state';
+import { authAtom } from "../_state";
 
 export { Home };
 

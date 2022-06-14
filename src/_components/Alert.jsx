@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 
-import { alertAtom } from '_state';
-import { useAlertActions } from '_actions';
-import { history } from '_helpers';
+import { alertAtom } from "../_state";
+import { useAlertActions} from "../_actions";
+import { history } from "../_helpers";
 
 export { Alert };
 

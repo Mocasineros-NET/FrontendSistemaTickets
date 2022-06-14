@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import { articlesAtom } from "../_state";
-import { useUserActions } from '_actions';
+import { useUserActions } from '../_actions';
 
 export { List };
 

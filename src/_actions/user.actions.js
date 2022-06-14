@@ -1,7 +1,7 @@
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
 
-import { history, useFetchWrapper } from '_helpers';
-import {authAtom, usersAtom, userAtom, ticketsAtom, ticketAtom, commentsAtom, commentAtom, articlesAtom, articleAtom } from '_state';
+import { history, useFetchWrapper } from '../_helpers';
+import {authAtom, usersAtom, userAtom, ticketsAtom, ticketAtom, articlesAtom, articleAtom } from '../_state';
 
 export { useUserActions };
 
@@ -13,8 +13,6 @@ function useUserActions () {
     const setUser = useSetRecoilState(userAtom);
     const setTickets = useSetRecoilState(ticketsAtom);
     const setTicket = useSetRecoilState(ticketAtom);
-    const setComments = useSetRecoilState(commentsAtom);
-    const setComment = useSetRecoilState(commentAtom);
     const setArticles = useSetRecoilState(articlesAtom);
     const setArticle = useSetRecoilState(articleAtom);
 

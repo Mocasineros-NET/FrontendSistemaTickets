@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
-import { authAtom } from '_state';
+import { authAtom } from "../_state";
 import { Login } from './Login';
 import { Register } from './Register';
 

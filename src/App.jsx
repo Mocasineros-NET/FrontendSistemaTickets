@@ -1,12 +1,12 @@
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
-import { authAtom } from '_state';
-import { Nav, Alert, PrivateRoute } from '_components';
-import { history } from '_helpers';
-import { Home } from 'home';
-import { Users } from 'users';
-import { Account } from 'account';
+import { authAtom } from './_state';
+import { Nav, Alert, PrivateRoute } from './_components';
+import { history } from './_helpers';
+import { Home } from './home';
+import { Users } from './users';
+import { Account } from './account';
 import { Tickets } from "./tickets";
 import { Articles } from "./Articles";
 

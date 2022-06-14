@@ -1,6 +1,6 @@
 import { useSetRecoilState, useResetRecoilState } from 'recoil';
 
-import { alertAtom } from '_state';
+import { alertAtom } from "../_state";
 
 export { useAlertActions };
 

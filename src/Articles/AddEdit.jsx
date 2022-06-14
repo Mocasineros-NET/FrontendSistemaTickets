@@ -5,8 +5,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useRecoilValue } from 'recoil';
 
-import { articleAtom } from '_state';
-import { useUserActions, useAlertActions } from '_actions';
+import { articleAtom } from "../_state";
+import { useUserActions, useAlertActions } from '../_actions';
 
 export { AddEdit };
 

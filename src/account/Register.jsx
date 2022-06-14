@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
-import { useUserActions, useAlertActions } from '_actions';
+import { useUserActions, useAlertActions } from "../_actions";
 import { Logo } from '../_components/Logo';
 
 export { Register };
