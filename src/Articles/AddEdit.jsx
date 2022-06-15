@@ -60,6 +60,7 @@ function AddEdit({ history, match }) {
   }
 
   function createArticle(data) {
+    data.idLocal = localStorage.getItem("idlocal");
     if (data.tags) {
       return userActions.registerArticle(data).then((response) => {
         const dataTags = {
@@ -89,40 +90,49 @@ function AddEdit({ history, match }) {
 
   const loading = mode.edit && !article;
   return (
-    <>
-      <h1>{mode.add ? 'Add Article' : 'Edit Article'}</h1>
-      {!loading &&
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-row">
-            <div className="form-group col">
-              <label>Title</label>
-              <input name="title" type="text" {...register('title')} className={`form-control ${errors.title ? 'is-invalid' : ''}`} />
+    <div className="flex flex-col justify-center items-center">
+      <div className="card w-96 bg-base-100 shadow-xl">
+        <div className="card-body">
+          <h1 className="font-bold text-2xl m-auto">{mode.add ? 'Add Article' : 'Edit Article'}</h1>
+          {!loading &&
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Title</span>
+              </label>
+              <input name="title" type="text" {...register('title')} placeholder="Type here" className={`input bg-white input-bordered w-full max-w-xs ${errors.title ? 'is-invalid' : ''}`}/>
               <div className="invalid-feedback">{errors.title?.message}</div>
             </div>
-            <div className="form-group col">
-              <label>Content</label>
-              <input name="content" type="text" {...register('content')} className={`form-control ${errors.content ? 'is-invalid' : ''}`} />
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Content</span>
+              </label>
+              <textarea name="content" {...register('content')} className={`textarea textarea-bordered bg-white w-full max-w-xs ${errors.content ? 'is-invalid' : ''}`} placeholder="Your content..."/>
               <div className="invalid-feedback">{errors.content?.message}</div>
             </div>
-            <div className="form-group col">
-              <label>Tags (optional)</label>
-              <input name="tags" type="text" {...register('tags')} className="form-control" />
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Tag (optional)</span>
+              </label>
+              <input name="tags" type="text" {...register('tags')} placeholder="Type here" className={`input bg-white input-bordered w-full max-w-xs ${errors.tags ? 'is-invalid' : ''}`}/>
+              <div className="invalid-feedback">{errors.tags?.message}</div>
             </div>
-          </div>
-          <div className="form-group">
-            <button type="submit" disabled={isSubmitting} className="btn btn-primary mr-2">
-              {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"/>}
-              Save
-            </button>
-            <Link to="/articles" className="btn btn-link">Cancel</Link>
-          </div>
-        </form>
-      }
-      {loading &&
-        <div className="text-center p-3">
-          <span className="spinner-border spinner-border-lg align-center"/>
+            <div className="form-group mt-6">
+              <button type="submit" disabled={isSubmitting} className="btn btn-primary mr-2">
+                {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"/>}
+                Save
+              </button>
+              <Link to="/articles" className="btn btn-link">Cancel</Link>
+            </div>
+          </form>
+          }
         </div>
+      </div>
+      {loading &&
+      <div className="text-center p-3">
+        <span className="spinner-border spinner-border-lg align-center"/>
+      </div>
       }
-    </>
+    </div>
   );
 }

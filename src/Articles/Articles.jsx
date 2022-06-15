@@ -11,7 +11,7 @@ function Articles({ match }) {
 
   return (
     <div className="p-4">
-      <div className="container">
+      <div className="container w-screen m-auto">
         <Switch>
           <Route exact path={path} component={List} />
           <Route path={`${path}/add`} component={AddEdit} />

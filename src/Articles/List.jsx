@@ -25,9 +25,9 @@ function List({ match }) {
     <div>
       <h1>Articles</h1>
       {role !== 2 && <Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">Add Article</Link>}
-      <table className="table table-striped">
+      <table className="table table-zebra w-full">
         <thead>
-        <tr className="text-white">
+        <tr>
           <th style={{ width: '30%' }}>Title</th>
           <th style={{ width: '30%' }}>Author</th>
           <th style={{ width: '30%' }}>Tags</th>
@@ -36,12 +36,12 @@ function List({ match }) {
         </thead>
         <tbody>
         {articles?.map(article =>
-          <tr className="text-white" key={article.knowledgeBaseArticleId}>
+          <tr key={article.knowledgeBaseArticleId}>
             <td>{article.title}</td>
             <td>{article.author.username}</td>
             <td>{article.tags.map((tag) => tag.name)}</td>
             <td style={{ whiteSpace: 'nowrap' }}>
-              <Link to={{pathname: `${path}/${article.knowledgeBaseArticleId}`}} className="btn btn-sm btn-primary mr-1 bg-green-400 text-black border-none hover:bg-green-500">View</Link>
+              <Link to={{pathname: `${path}/${article.knowledgeBaseArticleId}`}} className="btn btn-sm btn-primary mr-1 bg-primary text-black border-none hover:bg-secondary">View</Link>
               {role !== 2 && <Link to={`${path}/edit/${article.knowledgeBaseArticleId}`} className="btn btn-sm btn-primary mr-1">Edit</Link>}
               {role !== 2 && <button onClick={() => userActions.deleteArticle(article.knowledgeBaseArticleId)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={article.isDeleting}>
                 {article.isDeleting

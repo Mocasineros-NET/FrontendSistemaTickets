@@ -20,9 +20,9 @@ function Nav() {
   if (!auth) return null;
 
   return (
-    <div className="navbar bg-slate-800">
+    <div className="navbar bg-neutral">
       <div className="flex-1">
-        <Link to={{pathname: '/'}} className="hover:no-underline hover:text-white hover:bg-slate-800 btn btn-ghost normal-case text-xl text-white">
+        <Link to={{pathname: '/'}} className="hover:no-underline hover:text-white hover:bg-primary btn btn-ghost normal-case text-xl text-white">
           <img src={Logo} alt="logo" className="h-8 mr-2" />
           MocasinerosTickets
         </Link>
@@ -30,27 +30,27 @@ function Nav() {
       <div className="flex-none">
         <ul className="menu menu-horizontal p-0 text-white">
           <li>
-            <Link to={{pathname: '/'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
+            <Link to={{pathname: '/'}} className="hover:no-underline hover:text-white hover:bg-primary">
               Home
             </Link>
           </li>
           <li>
-            <Link to={{pathname: '/Tickets'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
+            <Link to={{pathname: '/Tickets'}} className="hover:no-underline hover:text-white hover:bg-primary">
               Tickets
             </Link>
           </li>
           {(role !== null && role !== 3) && <li>
-            <Link to={{pathname: '/Articles'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
+            <Link to={{pathname: '/Articles'}} className="hover:no-underline hover:text-white hover:bg-primary">
               Articles
             </Link>
           </li>}
           {(role !== null && role === 0) && <li>
-            <Link to={{pathname: '/Users'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
+            <Link to={{pathname: '/Users'}} className="hover:no-underline hover:text-white hover:bg-primary">
               Users
             </Link>
           </li>}
           <li>
-            <Link to={{pathname: '/'}} onClick={userActions.logout} className="hover:no-underline hover:text-white hover:bg-slate-600">
+            <Link to={{pathname: '/'}} onClick={userActions.logout} className="hover:no-underline hover:text-white hover:bg-primary">
               Logout
             </Link>
           </li>

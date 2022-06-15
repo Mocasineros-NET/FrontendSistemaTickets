@@ -36,9 +36,9 @@ function List({ history, match }) {
     <div>
       <h1>Users</h1>
       <Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">Add User</Link>
-      <table className="table table-striped">
+      <table className="table table-striped w-full">
         <thead>
-        <tr className="text-white">
+        <tr>
           <th style={{ width: '30%' }}>Username</th>
           <th style={{ width: '30%' }}>Name</th>
           <th style={{ width: '30%' }}>Role</th>
@@ -47,13 +47,13 @@ function List({ history, match }) {
         </thead>
         <tbody>
         {users?.map(user =>
-          <tr className="text-white" key={user.id}>
+          <tr key={user.id}>
             <td>{user.username}</td>
             <td>{user.firstName} {user.lastName}</td>
             <td>{user.role === 0 && "Admin"}{user.role === 1 && "Manager"}{user.role === 2 && "Engineer"}{user.role === 3 && "User"}</td>
             <td style={{ whiteSpace: 'nowrap' }}>
               {(role === 0 || role === 1) && <div className="dropdown">
-                <label tabIndex="0" className="btn m-1">Change role</label>
+                <label tabIndex="0" className="btn btn-sm m-1">Change role</label>
                 <ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                   <li><a onClick={() => onClickSetRole(user.id, 1)}>Manager</a></li>
                   <li><a onClick={() => onClickSetRole(user.id, 2)}>Engineer</a></li>

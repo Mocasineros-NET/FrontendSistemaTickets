@@ -16,7 +16,7 @@ function App() {
     const auth = useRecoilValue(authAtom);
 
     return (
-        <div className={'app-container' + (auth ? ' bg-light' : ' bg-gradient-to-r from-slate-600 to-slate-800')}>
+        <div className={'app-container' + (auth ? ' bg-white' : ' bg-gradient-to-r from-slate-600 to-slate-800')}>
             <Router history={history}>
                 <Nav />
                 <Alert />
