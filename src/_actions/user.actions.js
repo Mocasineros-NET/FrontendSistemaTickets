@@ -20,6 +20,7 @@ function useUserActions () {
   return {
     login,
     logout,
+    setPriority,
     openTicket,
     closeTicket,
     setUserRole,
@@ -37,6 +38,8 @@ function useUserActions () {
     getAllTags,
     getById,
     getTicketById,
+    getTicketByIdForUser,
+    getTicketByIdForEngineer,
     getArticleById,
     update,
     updateTicket,
@@ -73,6 +76,10 @@ function useUserActions () {
     localStorage.removeItem('user');
     setAuth(null);
     history.push('/Account/login');
+  }
+
+  function setPriority(ticketId, priority) {
+    return fetchWrapper.post(`${baseUrl}/api/Tickets/SetPriority/${ticketId}`, priority);
   }
 
   function openTicket(ticketId) {
@@ -161,6 +168,22 @@ function useUserActions () {
 
   function getArticleById(id) {
     return fetchWrapper.get(`${baseUrl}/api/knowledgebasearticle/${id}`).then(setArticle);
+  }
+
+  function getTicketByIdForUser(id) {
+    return fetchWrapper.get(`${baseUrl}/api/tickets/GetMyTickets/`).then((response) => response.forEach((r) => {
+      if (r.id === parseInt(id)) {
+        setTicket(r);
+      }
+    }));
+  }
+
+  function getTicketByIdForEngineer(id) {
+    return fetchWrapper.get(`${baseUrl}/api/tickets/GetMyAssignedTickets/`).then((response) => response.forEach((r) => {
+      if (r.id === parseInt(id)) {
+        setTicket(r);
+      }
+    }));
   }
 
   function update(id, params) {

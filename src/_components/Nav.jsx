@@ -39,11 +39,11 @@ function Nav() {
               Tickets
             </Link>
           </li>
-          <li>
-            <Link to={{pathname: '/articles'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
+          {(role !== null && role !== 3) && <li>
+            <Link to={{pathname: '/Articles'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
               Articles
             </Link>
-          </li>
+          </li>}
           {(role !== null && role === 0) && <li>
             <Link to={{pathname: '/Users'}} className="hover:no-underline hover:text-white hover:bg-slate-600">
               Users

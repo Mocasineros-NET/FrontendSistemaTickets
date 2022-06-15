@@ -47,7 +47,7 @@ function List({ history, match }) {
   return (
     <div>
       <h1>Tickets</h1>
-      <Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">Add Ticket</Link>
+      {role !== 2 && <Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">Add Ticket</Link>}
       <table className="table table-striped">
         <thead>
         <tr className="text-white">
@@ -84,13 +84,13 @@ function List({ history, match }) {
                   </>
                 }
               </div>}
-              <Link to={`${path}/edit/${ticket.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
-              <button onClick={() => userActions.deleteTicket(ticket.id)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={ticket.isDeleting}>
+              {role !== 2 && <Link to={`${path}/edit/${ticket.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>}
+              {role !== 2 && <button onClick={() => userActions.deleteTicket(ticket.id)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={ticket.isDeleting}>
                 {ticket.isDeleting
                   ? <span className="spinner-border spinner-border-sm"/>
                   : <span>Delete</span>
                 }
-              </button>
+              </button>}
             </td>
           </tr>
         )}
