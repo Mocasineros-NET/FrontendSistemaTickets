@@ -34,7 +34,7 @@ function List({ history, match }) {
 
   return (
     <div>
-      <h1>Users</h1>
+      <h1 className="text-4xl font-bold mb-3">🙎‍♂️Users</h1>
       <Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">Add User</Link>
       <table className="table table-striped w-full">
         <thead>
@@ -61,7 +61,7 @@ function List({ history, match }) {
                 </ul>
               </div>}
               <Link to={`${path}/edit/${user.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
-              <button onClick={() => userActions.deleteUser(user.id)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={user.isDeleting}>
+              <button onClick={() => userActions.deleteUser(user.id)} className="btn btn-sm bg-red-500" style={{ width: '60px' }} disabled={user.isDeleting}>
                 {user.isDeleting
                   ? <span className="spinner-border spinner-border-sm"/>
                   : <span>Delete</span>

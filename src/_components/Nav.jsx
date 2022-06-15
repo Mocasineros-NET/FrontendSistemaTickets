@@ -50,7 +50,7 @@ function Nav() {
             </Link>
           </li>}
           <li>
-            <Link to={{pathname: '/'}} onClick={userActions.logout} className="hover:no-underline hover:text-white hover:bg-primary">
+            <Link to={{pathname: '/account/login'}} onClick={userActions.logout} className="hover:no-underline hover:text-white hover:bg-primary">
               Logout
             </Link>
           </li>

@@ -23,7 +23,7 @@ function List({ match }) {
 
   return (
     <div>
-      <h1>Articles</h1>
+      <h1 className="text-4xl font-bold mb-3">📄Articles</h1>
       {role !== 2 && <Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">Add Article</Link>}
       <table className="table table-zebra w-full">
         <thead>
@@ -41,9 +41,9 @@ function List({ match }) {
             <td>{article.author.username}</td>
             <td>{article.tags.map((tag) => tag.name)}</td>
             <td style={{ whiteSpace: 'nowrap' }}>
-              <Link to={{pathname: `${path}/${article.knowledgeBaseArticleId}`}} className="btn btn-sm btn-primary mr-1 bg-primary text-black border-none hover:bg-secondary">View</Link>
+              <Link to={{pathname: `${path}/${article.knowledgeBaseArticleId}`}} className="btn btn-sm btn-primary mr-1 border-none">View</Link>
               {role !== 2 && <Link to={`${path}/edit/${article.knowledgeBaseArticleId}`} className="btn btn-sm btn-primary mr-1">Edit</Link>}
-              {role !== 2 && <button onClick={() => userActions.deleteArticle(article.knowledgeBaseArticleId)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={article.isDeleting}>
+              {role !== 2 && <button onClick={() => userActions.deleteArticle(article.knowledgeBaseArticleId)} className="btn btn-sm bg-red-500" style={{ width: '60px' }} disabled={article.isDeleting}>
                 {article.isDeleting
                   ? <span className="spinner-border spinner-border-sm"/>
                   : <span>Delete</span>
