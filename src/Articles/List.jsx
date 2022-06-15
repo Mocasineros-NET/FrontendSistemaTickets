@@ -30,7 +30,7 @@ function List({ match }) {
           <th style={{ width: '30%' }}>Title</th>
           <th style={{ width: '30%' }}>Author</th>
           <th style={{ width: '30%' }}>Tags</th>
-          <th style={{ width: '10%' }}></th>
+          <th style={{width: '10%'}}/>
         </tr>
         </thead>
         <tbody>
@@ -38,13 +38,13 @@ function List({ match }) {
           <tr className="text-white" key={article.knowledgeBaseArticleId}>
             <td>{article.title}</td>
             <td>{article.author.username}</td>
-            <td>{article.tags.forEach((x) => `${x.name} `)}</td>
+            <td>{article.tags.map((tag) => tag.name)}</td>
             <td style={{ whiteSpace: 'nowrap' }}>
               <Link to={{pathname: `${path}/${article.knowledgeBaseArticleId}`}} className="btn btn-sm btn-primary mr-1 bg-green-400 text-black border-none hover:bg-green-500">View</Link>
               <Link to={`${path}/edit/${article.knowledgeBaseArticleId}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
               <button onClick={() => userActions.deleteArticle(article.knowledgeBaseArticleId)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={article.isDeleting}>
                 {article.isDeleting
-                  ? <span className="spinner-border spinner-border-sm"></span>
+                  ? <span className="spinner-border spinner-border-sm"/>
                   : <span>Delete</span>
                 }
               </button>
@@ -54,7 +54,7 @@ function List({ match }) {
         {!articles &&
           <tr>
             <td colSpan="4" className="text-center">
-              <span className="spinner-border spinner-border-lg align-center"></span>
+              <span className="spinner-border spinner-border-lg align-center"/>
             </td>
           </tr>
         }

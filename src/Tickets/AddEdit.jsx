@@ -22,9 +22,7 @@ function AddEdit({ history, match }) {
     title: Yup.string()
       .required('Title is required'),
     description: Yup.string()
-      .required('Description is required'),
-    priority: Yup.string()
-      .required('Priority is requred')
+      .required('Description is required')
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -59,8 +57,6 @@ function AddEdit({ history, match }) {
   }
 
   function createTicket(data) {
-    data.priority = parseInt(data.priority);
-    console.log(data);
     return userActions.registerTicket(data)
       .then(() => {
         history.push('/api/Tickets');
@@ -92,17 +88,6 @@ function AddEdit({ history, match }) {
               <label>Description</label>
               <input name="description" type="text" {...register('description')} className={`form-control ${errors.description ? 'is-invalid' : ''}`} />
               <div className="invalid-feedback">{errors.description?.message}</div>
-            </div>
-            <div className="form-group col">
-              <label className="block">Priority</label>
-              <select defaultValue={0} {...register('priority')} className="select w-full max-w-xs text-white">
-                <option disabled selected>Pick your priority</option>
-                <option value={0}>Very low</option>
-                <option value={1}>Low</option>
-                <option value={2}>Moderate</option>
-                <option value={3}>High</option>
-                <option value={4}>Urgent</option>
-              </select>
             </div>
           </div>
           <div className="form-group">

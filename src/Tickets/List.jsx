@@ -17,9 +17,9 @@ function List({ history, match }) {
 
   useEffect(() => {
     userActions.getAllTicketsByRole(role);
-
+    // admin and manager
     if (role === 0 || role === 1) {
-      userActions.getAll();
+      userActions.getAllEngineers();
     }
 
     return userActions.resetTickets && userActions.resetUsers;
@@ -67,18 +67,14 @@ function List({ history, match }) {
             <td>{ticket.priority === 0 && "Urgent"}{ticket.priority === 1 && "High"}{ticket.priority === 2 && "Moderate"}{ticket.priority === 3 && "Low"}{ticket.priority === 4 && "Very low"}</td>
             <td style={{ whiteSpace: 'nowrap' }}>
               <Link to={{pathname: `${path}/${ticket.id}`}} className="btn btn-sm btn-primary mr-1 bg-green-400 text-black border-none hover:bg-green-500">View</Link>
-              {role === 0 && <div className="dropdown">
+              {(role === 0 || role === 1) && <div className="dropdown">
                 {ticket.engineerId === null &&
                   <>
                     <label tabIndex="0" className="btn m-1">Assign</label>
                     <ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                      {users?.map(user => {
-                        if (user.role === 2) {
-                          return <li key={user.id}>
-                            <a onClick={() => onClickAssign(ticket.id, user.id)}>{user.firstName+' '+user.lastName}</a>
-                          </li>
-                        }
-                      })}
+                      {users?.map(user => <li key={user.id}>
+                        <a onClick={() => onClickAssign(ticket.id, user.id)}>{user.firstName+' '+user.lastName}</a>
+                      </li>)}
                     </ul>
                   </>
                 }

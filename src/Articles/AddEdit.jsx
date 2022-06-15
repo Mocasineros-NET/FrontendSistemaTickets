@@ -32,11 +32,14 @@ function AddEdit({ history, match }) {
 
   useEffect(() => {
     // fetch user details into recoil state in edit mode
+    userActions.getAllTags()
     if (mode.edit) {
-      userActions.getArticleById(id);
+      userActions.getArticleById(id).then(userActions.getAllTags()).then(
+        userActions.resetTags
+      );
     }
 
-    return userActions.resetTicket;
+    return userActions.resetTicket && userActions.resetTags;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -57,6 +60,18 @@ function AddEdit({ history, match }) {
   }
 
   function createArticle(data) {
+    if (data.tags) {
+      return userActions.registerArticle(data).then((response) => {
+        const dataTags = {
+          name: data.tags,
+          knowledgeBaseArticleId: response.knowledgeBaseArticleId
+        }
+        userActions.registerTags(dataTags).then(() => {
+          history.push('/api/knowledgeBaseArticle');
+          alertActions.success('Article added');
+        })
+      })
+    }
     return userActions.registerArticle(data)
       .then(() => {
         history.push('/api/knowledgeBaseArticle');
@@ -90,33 +105,13 @@ function AddEdit({ history, match }) {
               <div className="invalid-feedback">{errors.content?.message}</div>
             </div>
             <div className="form-group col">
-              <label>Tags</label>
-              <div className="flex">
-                <select className="select w-full max-w-xs text-black bg-white border-black">
-                  <option disabled selected>Pick your favorite Simpson</option>
-                  <option value="1">Homer</option>
-                  <option value="2">Marge</option>
-                  <option value="3">Bart</option>
-                  <option value="4">Lisa</option>
-                  <option value="5">Maggie</option>
-                </select>
-                <label htmlFor="my-modal" className="btn modal-button text-white">+</label>
-              </div>
-              <input type="checkbox" id="my-modal" className="modal-toggle" />
-              <div className="modal">
-                <div className="modal-box bg-white">
-                  <h3 className="font-bold text-lg">Add Tags</h3>
-                  <p className="py-4">You've been selected for a change to get a...</p>
-                  <div className="modal-action">
-                    <label htmlFor="my-modal" className="btn">Yay!</label>
-                  </div>
-                </div>
-              </div>
+              <label>Tags (optional)</label>
+              <input name="tags" type="text" {...register('tags')} className="form-control" />
             </div>
           </div>
           <div className="form-group">
             <button type="submit" disabled={isSubmitting} className="btn btn-primary mr-2">
-              {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+              {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"/>}
               Save
             </button>
             <Link to="/articles" className="btn btn-link">Cancel</Link>
@@ -125,7 +120,7 @@ function AddEdit({ history, match }) {
       }
       {loading &&
         <div className="text-center p-3">
-          <span className="spinner-border spinner-border-lg align-center"></span>
+          <span className="spinner-border spinner-border-lg align-center"/>
         </div>
       }
     </>

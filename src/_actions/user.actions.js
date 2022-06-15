@@ -1,7 +1,7 @@
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
 
 import { history, useFetchWrapper } from '../_helpers';
-import {authAtom, usersAtom, userAtom, ticketsAtom, ticketAtom, articlesAtom, articleAtom } from '../_state';
+import {authAtom, usersAtom, userAtom, ticketsAtom, ticketAtom, articlesAtom, articleAtom, tagsAtom, tagAtom  } from '../_state';
 
 export { useUserActions };
 
@@ -13,6 +13,7 @@ function useUserActions () {
   const setUser = useSetRecoilState(userAtom);
   const setTickets = useSetRecoilState(ticketsAtom);
   const setTicket = useSetRecoilState(ticketAtom);
+  const setTags = useSetRecoilState(tagsAtom);
   const setArticles = useSetRecoilState(articlesAtom);
   const setArticle = useSetRecoilState(articleAtom);
 
@@ -28,9 +29,12 @@ function useUserActions () {
     registerTicket,
     registerComment,
     registerArticle,
+    registerTags,
     getAll,
     getAllTicketsByRole,
+    getAllEngineers,
     getAllArticles,
+    getAllTags,
     getById,
     getTicketById,
     getArticleById,
@@ -46,7 +50,9 @@ function useUserActions () {
     resetTickets: useResetRecoilState(ticketsAtom),
     resetTicket: useResetRecoilState(ticketAtom),
     resetArticles: useResetRecoilState(articlesAtom),
-    resetArticle: useResetRecoilState(articleAtom)
+    resetArticle: useResetRecoilState(articleAtom),
+    resetTags: useResetRecoilState(tagsAtom),
+    resetTag: useResetRecoilState(tagAtom),
   }
 
   function login({ username, password }) {
@@ -106,12 +112,24 @@ function useUserActions () {
     return fetchWrapper.post(`${baseUrl}/api/Comment`, comment);
   }
 
+  function registerTags(tag) {
+    return fetchWrapper.post(`${baseUrl}/api/Tags`, tag);
+  }
+
   function getAll() {
     return fetchWrapper.get(`${baseUrl}/users`).then(setUsers);
   }
 
+  function getAllEngineers() {
+    return fetchWrapper.get(`${baseUrl}/users/getAllEngineers`).then(setUsers);
+  }
+
   function getAllArticles() {
     return fetchWrapper.get(`${baseUrl}/api/knowledgebasearticle`).then(setArticles);
+  }
+
+  function getAllTags() {
+    return fetchWrapper.get(`${baseUrl}/api/Tags/getAllTags`).then(setTags);
   }
 
   function getAllTicketsByRole(role) {
