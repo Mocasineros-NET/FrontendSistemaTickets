@@ -51,10 +51,11 @@ function List({ history, match }) {
       <table className="table table-striped">
         <thead>
         <tr className="text-white">
-          <th style={{ width: '30%' }}>User</th>
-          <th style={{ width: '30%' }}>Title</th>
-          <th style={{ width: '30%' }}>Status</th>
-          <th style={{ width: '10%' }}></th>
+          <th style={{ width: '25%' }}>User</th>
+          <th style={{ width: '25%' }}>Title</th>
+          <th style={{ width: '25%' }}>Status</th>
+          <th style={{ width: '15%' }}>Priority</th>
+          <th style={{width: '10%'}}/>
         </tr>
         </thead>
         <tbody>
@@ -62,7 +63,8 @@ function List({ history, match }) {
           <tr className="text-white" key={ticket.id}>
             <td>{ticket.user.username}</td>
             <td>{ticket.title}</td>
-            <td>{ticket.isClosed ? "Abierto" : 'Cerrado'}</td>
+            <td>{ticket.isClosed ? "Closed" : 'Open'}</td>
+            <td>{ticket.priority === 0 && "Urgent"}{ticket.priority === 1 && "High"}{ticket.priority === 2 && "Moderate"}{ticket.priority === 3 && "Low"}{ticket.priority === 4 && "Very low"}</td>
             <td style={{ whiteSpace: 'nowrap' }}>
               <Link to={{pathname: `${path}/${ticket.id}`}} className="btn btn-sm btn-primary mr-1 bg-green-400 text-black border-none hover:bg-green-500">View</Link>
               {role === 0 && <div className="dropdown">
@@ -89,7 +91,7 @@ function List({ history, match }) {
               <Link to={`${path}/edit/${ticket.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
               <button onClick={() => userActions.deleteTicket(ticket.id)} className="btn btn-sm btn-danger" style={{ width: '60px' }} disabled={ticket.isDeleting}>
                 {ticket.isDeleting
-                  ? <span className="spinner-border spinner-border-sm"></span>
+                  ? <span className="spinner-border spinner-border-sm"/>
                   : <span>Delete</span>
                 }
               </button>
@@ -99,7 +101,7 @@ function List({ history, match }) {
         {!tickets &&
           <tr>
             <td colSpan="4" className="text-center">
-              <span className="spinner-border spinner-border-lg align-center"></span>
+              <span className="spinner-border spinner-border-lg align-center"/>
             </td>
           </tr>
         }

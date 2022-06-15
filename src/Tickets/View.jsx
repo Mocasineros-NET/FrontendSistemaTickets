@@ -28,6 +28,18 @@ function View({ history, match }) {
     userActions.getTicketById(id).then(() => userActions.resetTicket);
   }, []);
 
+  function onClickOpenCloseTicket(isClosed, ticketId) {
+    if (isClosed === false) {
+      return userActions.closeTicket(ticketId).then(() => {
+        history.go(0);
+      });
+    } else {
+      return userActions.openTicket(ticketId).then(() => {
+        history.go(0);
+      });
+    }
+  }
+
   function onSubmit(id, data) {
     return createComment(id, data);
   }
@@ -50,7 +62,10 @@ function View({ history, match }) {
     <>
       {!loading &&
         <>
-          <h1 className="font-black text-2xl mb-3">{ticket.title}</h1>
+          <div className="flex">
+            <h1 className="font-black text-2xl mb-3 mr-[80%]">{ticket.title}</h1>
+            {ticket.isClosed === false && <button onClick={() => onClickOpenCloseTicket(ticket.isClosed, ticket.id)} className="btn">Close ticket</button>}{ticket.isClosed === true && <button onClick={() => onClickOpenCloseTicket(ticket.isClosed, ticket.id)} className="btn">Open ticket</button>}
+          </div>
           <div className="grid grid-cols-[200px_minmax(900px,_1fr)]">
             <span className="text-slate-500">Status</span>
             <p className="font-bold">{ticket.isClosed ? "Abierto" : 'Cerrado'}</p>
@@ -98,7 +113,7 @@ function View({ history, match }) {
           <form onSubmit={handleSubmit(onSubmit)}>
             <input className="border border-2" name="text" type="text" {...register ('text')} />
             <button type="submit" disabled={isSubmitting} className="btn btn-primary mr-2">
-              {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+              {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"/>}
               Save
             </button>
             <Link to="/tickets" className="btn btn-link">Cancel</Link>
@@ -107,7 +122,7 @@ function View({ history, match }) {
       }
       {loading &&
         <div className="text-center p-3">
-          <span className="spinner-border spinner-border-lg align-center"></span>
+          <span className="spinner-border spinner-border-lg align-center"/>
         </div>
       }
     </>

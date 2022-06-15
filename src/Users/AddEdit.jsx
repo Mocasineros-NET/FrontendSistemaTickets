@@ -122,7 +122,7 @@ function AddEdit({ history, match }) {
                     </div>
                     <div className="form-group">
                         <button type="submit" disabled={isSubmitting} className="btn btn-primary mr-2">
-                            {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                            {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"/>}
                             Save
                         </button>
                         <Link to="/users" className="btn btn-link">Cancel</Link>
@@ -131,7 +131,7 @@ function AddEdit({ history, match }) {
             }
             {loading &&
                 <div className="text-center p-3">
-                    <span className="spinner-border spinner-border-lg align-center"></span>
+                    <span className="spinner-border spinner-border-lg align-center"/>
                 </div>
             }
         </>

@@ -23,6 +23,8 @@ function AddEdit({ history, match }) {
       .required('Title is required'),
     description: Yup.string()
       .required('Description is required'),
+    priority: Yup.string()
+      .required('Priority is requred')
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -57,6 +59,8 @@ function AddEdit({ history, match }) {
   }
 
   function createTicket(data) {
+    data.priority = parseInt(data.priority);
+    console.log(data);
     return userActions.registerTicket(data)
       .then(() => {
         history.push('/api/Tickets');
@@ -89,10 +93,21 @@ function AddEdit({ history, match }) {
               <input name="description" type="text" {...register('description')} className={`form-control ${errors.description ? 'is-invalid' : ''}`} />
               <div className="invalid-feedback">{errors.description?.message}</div>
             </div>
+            <div className="form-group col">
+              <label className="block">Priority</label>
+              <select defaultValue={0} {...register('priority')} className="select w-full max-w-xs text-white">
+                <option disabled selected>Pick your priority</option>
+                <option value={0}>Very low</option>
+                <option value={1}>Low</option>
+                <option value={2}>Moderate</option>
+                <option value={3}>High</option>
+                <option value={4}>Urgent</option>
+              </select>
+            </div>
           </div>
           <div className="form-group">
             <button type="submit" disabled={isSubmitting} className="btn btn-primary mr-2">
-              {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+              {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"/>}
               Save
             </button>
             <Link to="/tickets" className="btn btn-link">Cancel</Link>
@@ -101,7 +116,7 @@ function AddEdit({ history, match }) {
       }
       {loading &&
         <div className="text-center p-3">
-          <span className="spinner-border spinner-border-lg align-center"></span>
+          <span className="spinner-border spinner-border-lg align-center"/>
         </div>
       }
     </>
